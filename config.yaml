@@ -25,8 +25,8 @@ models:
       baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent. Halte Antworten kurz und präzise. Sprache: Deutsch."
       baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent. Halte Antworten kurz und präzise. Nutze Tools wenn nötig. Sprache: Deutsch."
     defaultCompletionOptions:
-      contextLength: 16384
-      maxTokens: 2048
+      contextLength: 8192
+      maxTokens: 768
       temperature: 0.1
     requestOptions:
       extraBodyProperties:
@@ -35,11 +35,6 @@ models:
           - "<|endoftext|>"
           - "</s>"
           - "<important_rules>"
-          - "\nUser"
-          - "\nAssistant"
-          - "ENDuser"
-          - "ENDassistant"
-          - "\n\n#"
         repeat_penalty: 1.2
 
   - name: "Qwen Autocomplete"
@@ -49,6 +44,10 @@ models:
     model: "Qwen2.5-Coder-7B"
     roles:
       - autocomplete
+    defaultCompletionOptions:
+      contextLength: 8192
+      maxTokens: 96
+      temperature: 0.0
 
 mcpServers:
   - name: web-context
