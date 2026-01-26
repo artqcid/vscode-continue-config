@@ -21,12 +21,12 @@ models:
       - chat
       - summarize
     chatOptions:
-      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent. Halte Antworten kurz und präzise. Sprache: Deutsch."
-      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent. Halte Antworten kurz und präzise. Nutze Tools wenn nötig. Sprache: Deutsch."
+      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent für JUCE, Plugin-Entwicklung, DSP und Web-Frontend. Wenn @[context] genannt wird (z.B. @juce), verwende GENAU diese Dokumentation. Halte Antworten kurz und präzise. NIEMALS npm/React bei @juce-Fragen. Sprache: Deutsch."
+      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent für JUCE, Audio-Plugins, DSP und Frontend. Wenn @[context] genannt wird, nutze GENAU diese Docs (z.B. @juce=JUCE Framework C++, @vue=Vue.js, @dsp=Signal Processing). Halte Antworten kurz und präzise. Sprache: Deutsch."
     defaultCompletionOptions:
       contextLength: 8192
-      maxTokens: 768
-      temperature: 0.1
+      maxTokens: 2048
+      temperature: 0.5
     requestOptions:
       extraBodyProperties:
         stop:
@@ -47,7 +47,7 @@ models:
       - apply
     defaultCompletionOptions:
       contextLength: 8192
-      maxTokens: 512
+      maxTokens: 1024
       temperature: 0.0
     requestOptions:
       extraBodyProperties:
