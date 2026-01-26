@@ -1,0 +1,26 @@
+# Continue IDE Cache & Data
+index/
+sessions/
+storage/
+snapshots/
+dev_data/
+.migrations/
+.utils/
+
+# Local state files
+.qdrant-initialized
+.continuerc.json
+
+# Node modules (if any)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log

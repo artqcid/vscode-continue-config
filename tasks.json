@@ -1,0 +1,45 @@
+{
+    // VS Code Autostart für llama.cpp
+    // Fügt das PowerShell-Skript als Autostart beim Öffnen und Stop beim Schließen hinzu
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Update mcp.json",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "${workspaceFolder}/../qwen2.5-7b-training/update_mcp_json.py"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Start llama.cpp Server",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}/.continue/llama-vscode-autostart.ps1"
+            ],
+            "problemMatcher": [],
+            "isBackground": true,
+            "dependsOn": [
+                "Update mcp.json"
+            ]
+        },
+        {
+            "label": "Stop llama.cpp Server",
+            "type": "shell",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "Get-Process server | Stop-Process -Force"
+            ],
+            "problemMatcher": []
+        }
+    ],
+    "startupTasks": [
+        "Start llama.cpp Server"
+    ]
+}

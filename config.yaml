@@ -1,0 +1,57 @@
+name: "Local Qwen Engineering Setup"
+version: "1.0.0"
+schema: v1
+
+rules:
+  - Antworte immer auf Deutsch, es sei denn explizit anders gewünscht.
+  - Halte Antworten kurz und präzise.
+  - Folge dem bestehenden Code-Stil.
+  - Halluziniere keine APIs oder Dependencies.
+
+models:
+  - name: "Qwen Code"
+    provider: openai
+    apiBase: "http://127.0.0.1:8080/v1"
+    apiKey: "none"
+    model: "Qwen2.5-Coder-7B"
+    capabilities:
+      - tool_use
+    roles:
+      - chat
+      - edit
+      - apply
+      - summarize
+    chatOptions:
+      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent. Halte Antworten kurz und präzise. Sprache: Deutsch."
+      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent. Halte Antworten kurz und präzise. Nutze Tools wenn nötig. Sprache: Deutsch."
+    defaultCompletionOptions:
+      contextLength: 16384
+      maxTokens: 2048
+      temperature: 0.1
+    requestOptions:
+      extraBodyProperties:
+        stop:
+          - "<|im_end|>"
+          - "<|endoftext|>"
+          - "</s>"
+          - "<important_rules>"
+          - "\nUser"
+          - "\nAssistant"
+          - "ENDuser"
+          - "ENDassistant"
+          - "\n\n#"
+        repeat_penalty: 1.2
+
+  - name: "Qwen Autocomplete"
+    provider: openai
+    apiBase: "http://127.0.0.1:8080/v1"
+    apiKey: "none"
+    model: "Qwen2.5-Coder-7B"
+    roles:
+      - autocomplete
+
+mcpServers:
+  - name: web-context
+    type: sse
+    url: "http://127.0.0.1:8003/sse"
+
