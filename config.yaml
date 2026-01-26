@@ -9,7 +9,8 @@ rules:
   - Halluziniere keine APIs oder Dependencies.
 
 models:
-  - name: "Qwen Code"
+  # Chat & Summarize: etwas mehr Tokens für Erklärungen
+  - name: "Qwen Chat"
     provider: openai
     apiBase: "http://127.0.0.1:8080/v1"
     apiKey: "none"
@@ -18,8 +19,6 @@ models:
       - tool_use
     roles:
       - chat
-      - edit
-      - apply
       - summarize
     chatOptions:
       baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent. Halte Antworten kurz und präzise. Sprache: Deutsch."
@@ -37,6 +36,28 @@ models:
           - "<important_rules>"
         repeat_penalty: 1.2
 
+  # Edit & Apply: deterministisch, keine Halluzinationen
+  - name: "Qwen Edit"
+    provider: openai
+    apiBase: "http://127.0.0.1:8080/v1"
+    apiKey: "none"
+    model: "Qwen2.5-Coder-7B"
+    roles:
+      - edit
+      - apply
+    defaultCompletionOptions:
+      contextLength: 8192
+      maxTokens: 512
+      temperature: 0.0
+    requestOptions:
+      extraBodyProperties:
+        stop:
+          - "<|im_end|>"
+          - "<|endoftext|>"
+          - "</s>"
+        repeat_penalty: 1.2
+
+  # Autocomplete: minimal, ultraschnell
   - name: "Qwen Autocomplete"
     provider: openai
     apiBase: "http://127.0.0.1:8080/v1"
