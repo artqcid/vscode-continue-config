@@ -1,28 +1,33 @@
-name: "Local Qwen Engineering Setup"
-version: "1.0.0"
+name: Local Qwen Engineering Setup
+version: 1.0.0
 schema: v1
-
 rules:
   - Antworte immer auf Deutsch, es sei denn explizit anders gewünscht.
   - Halte Antworten kurz und präzise.
   - Folge dem bestehenden Code-Stil.
   - Halluziniere keine APIs oder Dependencies.
-
 models:
-  # Chat & Summarize: etwas mehr Tokens für Erklärungen
-  - name: "Qwen Chat"
+  - name: Qwen Chat
     provider: openai
-    apiBase: "http://127.0.0.1:8080/v1"
-    apiKey: "none"
-    model: "Qwen2.5-Coder-7B"
+    apiBase: http://127.0.0.1:8080/v1
+    apiKey: none
+    model: Qwen2.5-Coder-7B
     capabilities:
       - tool_use
     roles:
       - chat
       - summarize
     chatOptions:
-      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent für JUCE, Plugin-Entwicklung, DSP und Web-Frontend. Wenn @[context] genannt wird (z.B. @juce), verwende GENAU diese Dokumentation. Halte Antworten kurz und präzise. NIEMALS npm/React bei @juce-Fragen. Sprache: Deutsch."
-      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent für JUCE, Audio-Plugins, DSP und Frontend. Wenn @[context] genannt wird, nutze GENAU diese Docs (z.B. @juce=JUCE Framework C++, @vue=Vue.js, @dsp=Signal Processing). Halte Antworten kurz und präzise. Sprache: Deutsch."
+      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein
+        hilfreicher Coding-Assistent für JUCE, Plugin-Entwicklung, DSP und
+        Web-Frontend. Wenn @[context] genannt wird (z.B. @juce), verwende GENAU
+        diese Dokumentation. Halte Antworten kurz und präzise. NIEMALS npm/React
+        bei @juce-Fragen. Sprache: Deutsch."
+      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein
+        hilfreicher Coding-Agent für JUCE, Audio-Plugins, DSP und Frontend. Wenn
+        @[context] genannt wird, nutze GENAU diese Docs (z.B. @juce=JUCE
+        Framework C++, @vue=Vue.js, @dsp=Signal Processing). Halte Antworten
+        kurz und präzise. Sprache: Deutsch."
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 2048
@@ -30,48 +35,42 @@ models:
     requestOptions:
       extraBodyProperties:
         stop:
-          - "<|im_end|>"
-          - "<|endoftext|>"
-          - "</s>"
-          - "<important_rules>"
+          - <|im_end|>
+          - <|endoftext|>
+          - </s>
+          - <important_rules>
         repeat_penalty: 1.2
-
-  # Edit & Apply: deterministisch, keine Halluzinationen
-  - name: "Qwen Edit"
+  - name: Qwen Edit
     provider: openai
-    apiBase: "http://127.0.0.1:8080/v1"
-    apiKey: "none"
-    model: "Qwen2.5-Coder-7B"
+    apiBase: http://127.0.0.1:8080/v1
+    apiKey: none
+    model: Qwen2.5-Coder-7B
     roles:
       - edit
       - apply
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 1024
-      temperature: 0.0
+      temperature: 0
     requestOptions:
       extraBodyProperties:
         stop:
-          - "<|im_end|>"
-          - "<|endoftext|>"
-          - "</s>"
+          - <|im_end|>
+          - <|endoftext|>
+          - </s>
         repeat_penalty: 1.2
-
-  # Autocomplete: minimal, ultraschnell
-  - name: "Qwen Autocomplete"
+  - name: Qwen Autocomplete
     provider: openai
-    apiBase: "http://127.0.0.1:8080/v1"
-    apiKey: "none"
-    model: "Qwen2.5-Coder-7B"
+    apiBase: http://127.0.0.1:8080/v1
+    apiKey: none
+    model: Qwen2.5-Coder-7B
     roles:
       - autocomplete
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 96
-      temperature: 0.0
-
+      temperature: 0
 mcpServers:
   - name: web-context
     type: sse
-    url: "http://127.0.0.1:8003/sse"
-
+    url: http://127.0.0.1:8003/sse
