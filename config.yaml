@@ -15,7 +15,6 @@ models:
     roles:
       - chat
       - summarize
-      - summarize
     chatOptions:
       baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Assistent für JUCE, Plugin-Entwicklung, DSP und Web-Frontend. Wenn @[context] genannt wird (z.B. @juce), verwende GENAU diese Dokumentation. Halte Antworten kurz und präzise. NIEMALS npm/React bei @juce-Fragen. Sprache: Deutsch."
       baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein hilfreicher Coding-Agent für JUCE, Audio-Plugins, DSP und Frontend. Wenn @[context] genannt wird, nutze GENAU diese Docs (z.B. @juce=JUCE Framework C++, @vue=Vue.js, @dsp=Signal Processing). Halte Antworten kurz und präzise. Sprache: Deutsch."
@@ -29,8 +28,12 @@ models:
     apiKey: none
     model: qwen
     roles:
+      - chat
+      - summarize
       - edit
-      - agent
+      - autocomplete
+      - apply
+      - subagent
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 1024
@@ -39,3 +42,4 @@ mcpServers:
   - name: web-context
     type: sse
     url: http://127.0.0.1:8003/sse
+
