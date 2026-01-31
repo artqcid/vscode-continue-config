@@ -8,47 +8,25 @@ rules:
   - Halluziniere keine APIs oder Dependencies.
 models:
   - name: Mistral Chat
-    provider: openai
+    provider: continue-proxy
     apiBase: http://127.0.0.1:8080/v1
     apiKey: none
     model: mistral
-    capabilities:
-      - tool_use
     roles:
       - chat
       - summarize
-    chatOptions:
-      baseSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein
-        hilfreicher Coding-Assistent für JUCE, Plugin-Entwicklung, DSP und
-        Web-Frontend. Wenn @[context] genannt wird (z.B. @juce), verwende GENAU
-        diese Dokumentation. Halte Antworten kurz und präzise. NIEMALS npm/React
-        bei @juce-Fragen. Sprache: Deutsch."
-      baseAgentSystemMessage: "WICHTIG: Du antwortest IMMER auf Deutsch. Du bist ein
-        hilfreicher Coding-Agent für JUCE, Audio-Plugins, DSP und Frontend. Wenn
-        @[context] genannt wird, nutze GENAU diese Docs (z.B. @juce=JUCE
-        Framework C++, @vue=Vue.js, @dsp=Signal Processing). Halte Antworten
-        kurz und präzise. Sprache: Deutsch."
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 2048
       temperature: 0.5
-    requestOptions:
-      extraBodyProperties:
-        stop:
-          - <|im_end|>
-          - <|endoftext|>
-          - </s>
-          - <important_rules>
-        repeat_penalty: 1.2
   - name: Qwen Agent
-    provider: openai
+    provider: continue-proxy
     apiBase: http://127.0.0.1:8080/v1
     apiKey: none
     model: qwen
     roles:
       - edit
-      - apply
-      - autocomplete
+      - agent
     defaultCompletionOptions:
       contextLength: 8192
       maxTokens: 1024
@@ -57,3 +35,9 @@ mcpServers:
   - name: web-context
     type: sse
     url: http://127.0.0.1:8003/sse
+
+# Proxy configuration required by Continue schema
+proxy:
+  type: continue-proxy
+  orgScopeId: ""
+  onPremProxyUrl: ""
