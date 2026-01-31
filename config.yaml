@@ -7,11 +7,11 @@ rules:
   - Folge dem bestehenden Code-Stil.
   - Halluziniere keine APIs oder Dependencies.
 models:
-  - name: Qwen Chat
+  - name: Mistral Chat
     provider: openai
     apiBase: http://127.0.0.1:8080/v1
     apiKey: none
-    model: Qwen2.5-Coder-7B
+    model: mistral
     capabilities:
       - tool_use
     roles:
@@ -40,35 +40,18 @@ models:
           - </s>
           - <important_rules>
         repeat_penalty: 1.2
-  - name: Qwen Edit
+  - name: Qwen Agent
     provider: openai
     apiBase: http://127.0.0.1:8080/v1
     apiKey: none
-    model: Qwen2.5-Coder-7B
+    model: qwen
     roles:
       - edit
       - apply
-    defaultCompletionOptions:
-      contextLength: 8192
-      maxTokens: 1024
-      temperature: 0
-    requestOptions:
-      extraBodyProperties:
-        stop:
-          - <|im_end|>
-          - <|endoftext|>
-          - </s>
-        repeat_penalty: 1.2
-  - name: Qwen Autocomplete
-    provider: openai
-    apiBase: http://127.0.0.1:8080/v1
-    apiKey: none
-    model: Qwen2.5-Coder-7B
-    roles:
       - autocomplete
     defaultCompletionOptions:
       contextLength: 8192
-      maxTokens: 96
+      maxTokens: 1024
       temperature: 0
 mcpServers:
   - name: web-context
